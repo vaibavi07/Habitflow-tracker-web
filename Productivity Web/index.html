@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HabitFlow - Track Your Progress</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">🎯 HabitFlow</div>
+      <div class="nav-links">
+        <button onclick="showPage('home')">Home</button>
+        <button id="dashboardNavBtn" onclick="showPage('dashboard')" style="display:none;">Dashboard</button>
+        <button onclick="showPage('faq')">FAQ</button>
+        <button onclick="showPage('reviews')">Reviews</button>
+        <button id="loginNavBtn" onclick="showPage('login')">Login</button>
+        <button id="registerNavBtn" onclick="showPage('register')">Register</button>
+        <button id="logoutNavBtn" onclick="logout()" class="logout-btn" style="display:none;">Logout</button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- HOME -->
+    <section id="home" class="page active">
+      <div class="hero">
+        <h1>Build Better Habits</h1>
+        <p>Track your progress, stay motivated, and achieve your goals</p>
+        <button class="cta-button" onclick="showPage('register')">Get Started Free</button>
+      </div>
+
+      <div class="quote-bar">
+        <p id="motivationalQuote">"The secret of getting ahead is getting started."</p>
+        <small id="quoteAuthor">- Mark Twain</small>
+      </div>
+
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">✅</div>
+          <h3>Daily Check-ins</h3>
+          <p>Mark your habits complete each day and build momentum</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔥</div>
+          <h3>Track Streaks</h3>
+          <p>See your progress and maintain your winning streaks</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💪</div>
+          <h3>Stay Motivated</h3>
+          <p>Get daily inspiration with motivational quotes</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOGIN -->
+    <section id="login" class="page">
+      <div class="auth-form">
+        <h2>Welcome Back!</h2>
+        <div id="loginMessage"></div>
+        <form id="loginForm">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="loginEmail" required />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="loginPassword" required />
+          </div>
+          <button type="submit" class="submit-btn" id="loginBtn">Login</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="register" class="page">
+      <div class="auth-form">
+        <h2>Create Account</h2>
+        <div id="registerMessage"></div>
+        <form id="registerForm">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="registerName" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="registerEmail" required />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="registerPassword" required minlength="6" />
+          </div>
+          <button type="submit" class="submit-btn" id="registerBtn">Sign Up</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- DASHBOARD (habits + add) -->
+    <section id="dashboard" class="page">
+      <div class="quote-bar">
+        <p id="dashboardQuote">"Success is the sum of small efforts repeated day in and day out."</p>
+        <small id="dashboardQuoteAuthor">- Robert Collier</small>
+      </div>
+
+      <div class="dashboard">
+        <div class="dashboard-header">
+          <h2>My Habits</h2>
+          <div>
+            <button class="submit-btn" onclick="promptAddHabit()">+ Add Habit</button>
+            <button class="logout-btn" onclick="logout()" title="Logout">Logout</button>
+          </div>
+        </div>
+
+        <div class="add-habit-inline" id="addHabitInline" style="display:none;">
+          <input type="text" id="newHabitInput" placeholder="Add a new habit..." />
+          <button onclick="addHabit()">Add</button>
+          <button onclick="hideAddInline()" class="logout-btn" style="background:#aaa;">Cancel</button>
+        </div>
+
+        <div id="habitsList" class="habits-list">
+          <div class="loading">Loading your habits...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="page">
+      <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <div class="faq-question">How do I track my habits?</div>
+          <div class="faq-answer">Add a habit from your dashboard and click the check-in button each day you complete it.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">What happens if I miss a day?</div>
+          <div class="faq-answer">If you miss a day, your streak will reset to 0 for that habit. You can start again the next day.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Can I track multiple habits?</div>
+          <div class="faq-answer">Yes! You can add as many habits as you want.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Is my data secure?</div>
+          <div class="faq-answer">This demo stores data in your browser using localStorage. It's good for demo and learning — a real backend would be used in production.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="page">
+      <div class="reviews-section">
+        <h2>What Our Users Say</h2>
+        <div class="review-item">
+          <div class="review-header">
+            <span class="review-author">Sarah Johnson</span>
+            <span class="review-stars">⭐⭐⭐⭐⭐</span>
+          </div>
+          <div class="review-text">"HabitFlow has changed how I plan my day. I love the streak counter!"</div>
+        </div>
+
+        <div class="review-item">
+          <div class="review-header">
+            <span class="review-author">Mike Chen</span>
+            <span class="review-stars">⭐⭐⭐⭐⭐</span>
+          </div>
+          <div class="review-text">"Simple, clean interface. Easy to use daily."</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
